@@ -1,23 +1,29 @@
-import Fastify from 'fastify';
-import cors from '@fastify/cors';
-import { routes } from './routes'
+// src/server.ts
+import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import routes from './routes/index';
 
-const app = Fastify({logger: true});
+const app = express();
 
-app.setErrorHandler((error, request, reply) => {
-    reply.code(400).send({message: error.message})
-})
+// Middleware para parsear JSON
+app.use(express.json());
 
-const start = async () => {
+// Habilita CORS para todas as rotas
+app.use(cors());
 
-    await app.register(cors);
-    await app.register(routes);
-    
-    try{
-        await app.listen({port: 3333 })
-    }catch(err){
-        process.exit(1);
-    }
-}
+// Rotas da aplicação
+// Se suas rotas já definem caminho completo (ex: '/customers'), use:
+app.use(routes);
+// Caso queira prefixo, faça: app.use('/api', routes);
 
-start();
+// Tratamento de erros genérico
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err);
+  res.status(400).json({ message: err.message });
+});
+
+// Inicia o servidor
+const PORT = process.env.PORT || 3333;
+app.listen(PORT, () => {
+  console.log(`🚀 Express server running on http://localhost:${PORT}`);
+});

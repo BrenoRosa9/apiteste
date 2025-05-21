@@ -1,27 +1,12 @@
-import prismaClient from "../prisma"
-
-interface CreateCustomerProps {
-    name: string;
-    email: string;
-}
+import type { Customer } from "@prisma/client";
+import { CustomerRepository } from "../repositories/customer-repository";
 
 class CreateCustomerService {
-    async execute({ name, email }: CreateCustomerProps) {
 
-        if (!name || !email) {
-            throw new Error("Preencha todos os campos")
-        }
-
-        const customer = await prismaClient.customer.create({
-            data: {
-                name,
-                email,
-                status: true
-            }
-        })
-
-        return customer
-    }
+  async execute(name: string, email: string): Promise<Customer> {
+    const repository = new CustomerRepository();
+    return repository.create(name, email);
+  }
 }
 
 export { CreateCustomerService }

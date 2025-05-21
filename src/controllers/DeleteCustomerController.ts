@@ -1,16 +1,14 @@
-import { FastifyRequest, FastifyReply } from "fastify"
+import { Request, Response } from "express"
 import { DeleteCustomerService } from '../services/DeleteCustomerService'
 
-class DeleteCustomerController{
-    async handle(request: FastifyRequest, reply: FastifyReply) {
-        const { id } = request.query as { id: string }
+export class DeleteCustomerController{
+    async handle(req: Request, res: Response) {
+        const { id } = req.query as { id: string }
         const customerService = new DeleteCustomerService;
 
-        const customer = await customerService.execute({ id })
+        const deleted = await customerService.execute(id)
 
-        reply.send(customer);
+        res.status(200).json(deleted);
     }
 
 }
-
-export { DeleteCustomerController }
