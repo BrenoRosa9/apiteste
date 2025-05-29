@@ -3,7 +3,7 @@ import { DeleteCustomerService } from '../services/DeleteCustomerService'
 
 export class DeleteCustomerController{
     async handle(req: Request, res: Response) {
-        const { id } = req.query as { id: string }
+        const { id } = req.params as { id: string }
         const customerService = new DeleteCustomerService;
 
         const deleted = await customerService.execute(id)
