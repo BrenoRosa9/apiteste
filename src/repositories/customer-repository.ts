@@ -13,4 +13,8 @@ export class CustomerRepository {
   async delete(id: string): Promise<void> {
     await prisma.customer.delete({ where: { id } });
   }
+
+  async update(id: string, name: string, email: string): Promise<void> {
+    await prisma.customer.update({ where: { id }, data: { name, email, updated_at: new Date()}});
+  }
 }
