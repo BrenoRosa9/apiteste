@@ -11,7 +11,7 @@ const listCustomerController = new ListCustomersController();
 const updateCustomerController = new UpdateCustomerController();
 
 customerRoutes.get('/', async (_req, res) => {
-  const response = await listCustomerController.handle();
+  const response = await listCustomerController.handle(_req, res);
   res.status(200).json(response);
 });
 

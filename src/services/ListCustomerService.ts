@@ -1,12 +1,22 @@
 import prismaClient from '../prisma';
+import { CustomerRepository } from '../repositories/customer-repository';
 
-class ListCustomersService{
-    async execute(){
+export class ListCustomersService {
+  private repo = new CustomerRepository();
 
-        const customers = await prismaClient.customer.findMany()
+  async execute(page: number, limit: number) {
+    const skip = (page - 1) * limit;
 
-        return customers;
-    }
+    const [customers, total] = await Promise.all([
+      this.repo.findAll(skip, limit),
+      this.repo.count()
+    ]);
+
+    return {
+      data: customers,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit)
+    };
+  }
 }
-
-export { ListCustomersService }
