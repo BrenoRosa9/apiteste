@@ -5,4 +5,4 @@ Descrição: Esta API CRUD foi desenvolvida com o intuito de aprimorar e fixar o
 Tecnologias Utilizadas:
 Node.js, Prisma ORM, PostgreSQL, Express.js, Docker
 
-Verifique a Documentação para mais informações: https://breno0904.atlassian.net/wiki/x/EwEB.
+Verifique a Documentação para mais informações: https://breno0904.atlassian.net/wiki/external/YjBmZmM0OTQ2YTI2NDMyNjhmMDA5NDY3ZmIzOWM4NzE.
